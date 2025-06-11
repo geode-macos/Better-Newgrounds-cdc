@@ -361,12 +361,7 @@ void NewgroundsSongPopup::addWidget()
 void NewgroundsSongPopup::waitForSongInfoFinish(float)
 {
     int idAsInt = utils::numFromString<int>(id).unwrapOr(0);
-    std::string songID = fmt::format("i_{}", idAsInt);
-    #ifndef GEODE_IS_MACOS
-    auto obj = MusicDownloadManager::sharedState()->getDLObject(songID.c_str());
-    #else
-    bool obj = MusicDownloadManager::sharedState()->isDLActive(songID.c_str());
-    #endif
+    bool obj = MusicDownloadManager::sharedState()->isDLActive(fmt::format("i_{}", idAsInt).c_str());
 
     if (!obj)
     {

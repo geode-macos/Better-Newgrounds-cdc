@@ -117,7 +117,8 @@ void API::getPopularSongs(int page, SEL_MenuHandler event, CCObject* sender)
             auto json = res->json().unwrap();
             auto str = json["content"].asString().unwrap();
 
-            totalCount = json["total"].asInt().unwrap();
+            totalCount = json["total"].asInt().unwrapOr(-1);
+            if (totalCount < 0) return;
 
             if (popularSongs.contains(page))
                 popularSongs.erase(page);
@@ -254,7 +255,8 @@ void API::getFeaturedSongs(int page, SEL_MenuHandler event, CCObject* sender)
             auto json = res->json().unwrap();
             auto str = json["content"].asString().unwrap();
 
-            totalCountFeatured = json["total"].asInt().unwrap();
+            totalCountFeatured = json["total"].asInt().unwrapOr(-1);
+            if (totalCountFeatured < 0) return;
 
             if (featuredSongs.contains(page))
                 featuredSongs.erase(page);
