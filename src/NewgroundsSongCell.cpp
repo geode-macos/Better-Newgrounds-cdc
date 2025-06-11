@@ -163,11 +163,12 @@ void NewgroundsSongCell::onArtist(CCObject* sender)
 
 void NewgroundsSongCell::onSpin(CCObject* sender)
 {
+    auto node = as<CCNode*>(sender);
+    // for the love of god this shouldve used node ids
     if (sender->getTag() == 69)
-        as<CCNode*>(sender)->getChildByType<CCSprite>(0)->runAction(CCEaseInOut::create(CCRotateBy::create(1, 360), 2));
+        node->getChildByType<CCSprite>(0)->runAction(CCEaseInOut::create(CCRotateBy::create(1, 360), 2));
     else
-        geode::log::info("Todo");
-        //getChildOfType<CCSprite>(getChildOfType<CCSprite>(as<CCNode*>(sender), 0), 0)->runAction(CCEaseInOut::create(CCRotateBy::create(1, 360), 2));
+        node->getChildByType<CCSprite>(0)->getChildByType<CCSprite>(0)->runAction(CCEaseInOut::create(CCRotateBy::create(1, 360), 2));
 }
 
 void NewgroundsSongCell::addIcon()
