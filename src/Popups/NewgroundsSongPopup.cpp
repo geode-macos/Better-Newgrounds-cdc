@@ -360,7 +360,13 @@ void NewgroundsSongPopup::addWidget()
 
 void NewgroundsSongPopup::waitForSongInfoFinish(float)
 {
-    auto obj = MusicDownloadManager::sharedState()->getDLObject(fmt::format("i_{}", utils::numFromString<int>(id).unwrapOr(0)).c_str());
+    int idAsInt = utils::numFromString<int>(id).unwrapOr(0);
+    std::string songID = fmt::format("i_{}", idAsInt);
+    #ifndef GEODE_IS_MACOS
+    auto obj = MusicDownloadManager::sharedState()->getDLObject(songID.c_str());
+    #else
+    bool obj = MusicDownloadManager::sharedState()->isDLActive(songID.c_str());
+    #endif
 
     if (!obj)
     {
@@ -368,7 +374,7 @@ void NewgroundsSongPopup::waitForSongInfoFinish(float)
 
         this->unschedule(schedule_selector(NewgroundsSongPopup::waitForSongInfoFinish));
 
-        bool downloaded = MusicDownloadManager::sharedState()->isSongDownloaded(utils::numFromString<int>(id).unwrapOr(0));
+        bool downloaded = MusicDownloadManager::sharedState()->isSongDownloaded(idAsInt);
 
         buttonsMenu->setVisible(!downloaded);
         buttonsMenuInstalled->setVisible(downloaded);
