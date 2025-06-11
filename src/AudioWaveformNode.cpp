@@ -29,7 +29,7 @@ bool AudioWaveformNode::init(std::string file)
 
 void AudioWaveformNode::generateSampleData()
 {
-    auto engine = FMODAudioEngine::sharedEngine();
+    /*auto engine = FMODAudioEngine::sharedEngine();
 
     if (!engine || !engine->m_system || !engine->m_sound)
         return;
@@ -113,7 +113,8 @@ void AudioWaveformNode::generateSampleData()
         sample /= channels;
         samples.push_back({sample, 0.f});
     }
-    delete[] data;
+    delete[] data;*/
+    return;
 }
 
 void AudioWaveformNode::draw()

@@ -16,6 +16,7 @@ add_library(${PROJECT_NAME} SHARED
     src/NewgroundsGenreLabel.cpp
     src/Popups/NewgroundsArtistPopup.cpp
     src/Popups/NewgroundsSongPopup.cpp
+    src/tinyxml2.cpp
     # Add any extra C++ source files here
 )
 
@@ -26,5 +27,5 @@ else()
 endif()
 
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
-
+add_compile_definitions(TINYXML2_INCLUDED)
 setup_geode_mod(${PROJECT_NAME})

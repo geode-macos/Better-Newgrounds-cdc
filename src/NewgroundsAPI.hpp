@@ -3,7 +3,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/MenuLayer.hpp>
 #include <Geode/utils/web.hpp>
-#include <Geode/cocos/support/tinyxml2/tinyxml2.h>
+#include "tinyxml2.h"
 #include <regex>
 
 using namespace tinyxml2;

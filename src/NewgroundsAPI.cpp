@@ -115,9 +115,9 @@ void API::getPopularSongs(int page, SEL_MenuHandler event, CCObject* sender)
     listener.bind([page, this, event, sender] (web::WebTask::Event* e) {
         if (web::WebResponse* res = e->getValue()) {
             auto json = res->json().unwrap();
-            auto str = json.as_object()["content"].as_string();
+            auto str = json["content"].asString().unwrap();
 
-            totalCount = json.as_object()["total"].as_int();
+            totalCount = json["total"].asInt().unwrap();
 
             if (popularSongs.contains(page))
                 popularSongs.erase(page);
@@ -252,9 +252,9 @@ void API::getFeaturedSongs(int page, SEL_MenuHandler event, CCObject* sender)
     listener.bind([page, this, event, sender] (web::WebTask::Event* e) {
         if (web::WebResponse* res = e->getValue()) {
             auto json = res->json().unwrap();
-            auto str = json.as_object()["content"].as_string();
+            auto str = json["content"].asString().unwrap();
 
-            totalCountFeatured = json.as_object()["total"].as_int();
+            totalCountFeatured = json["total"].asInt().unwrap();
 
             if (featuredSongs.contains(page))
                 featuredSongs.erase(page);
@@ -391,21 +391,21 @@ void API::getArtistSongs(std::string name, int page, SEL_MenuHandler event, CCOb
     listener.bind([page, name, this, event, sender] (web::WebTask::Event* e) {
         if (web::WebResponse* res = e->getValue()) {
             auto json = res->json().unwrap();
-            auto items = json.as_object()["items"].as_object();
+            auto items = json["items"].asArray().unwrap();
 
             if (artists[name].songs.contains(page))
                 artists[name].songs.erase(page);
 
-            if (json.as_object()["load_more"].as_string() == "\n")
+            if (json["load_more"].asString().unwrap() == "\n")
                 artists[name].lastPage = page;
 
             for (auto item : items)
             {
-                auto year = item.second.as_array();
+                auto year = item.asArray().unwrap();
 
                 for (auto song2 : year)
                 {
-                    auto str = song2.as_string();
+                    auto str = song2.asString().unwrap();
 
                     tinyxml2::XMLDocument doc;
                     auto result = doc.Parse(str.c_str());
